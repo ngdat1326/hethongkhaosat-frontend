@@ -1,0 +1,149 @@
+﻿@font-face {
+  font-family: 'VNI-Thuphap1';
+  src: url('./assets/fonts/VNI-Thuphap1.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import './styles/logo-config.css';
+
+body, html, #root {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+    background: #e6f9ec !important; /* pastel green background */
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Smooth transitions */
+* {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Custom form styles */
+input:focus,
+select:focus,
+textarea:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Animation for loading states */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Custom button hover effects */
+.btn-hover {
+    transform: translateY(0);
+    transition: transform 0.2s ease-in-out;
+}
+
+.btn-hover:hover {
+    transform: translateY(-2px);
+}
+
+/* Chart container styling */
+.recharts-wrapper {
+    font-family: inherit !important;
+}
+
+/* Mobile responsive improvements */
+@media (max-width: 768px) {
+    .mobile-scroll {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* --- OVERRIDE ALL ROUNDED CLASSES TO REMOVE BORDER RADIUS --- */
+[class*="rounded"],
+.rounded,
+.rounded-sm,
+.rounded-md,
+.rounded-lg,
+.rounded-xl,
+.rounded-2xl,
+.rounded-3xl,
+.rounded-full,
+.rounded-t,
+.rounded-b,
+.rounded-l,
+.rounded-r,
+.rounded-tl,
+.rounded-tr,
+.rounded-bl,
+.rounded-br {
+    border-radius: 0 !important;
+}
+
+/* Swiper navigation custom for DashboardOverview */
+.swiper-button-next,
+.swiper-button-prev {
+  width: 28px;
+  height: 28px;
+  color: #22c55e; /* xanh lá cây */
+  background: #fff;
+  border-radius: 50%;
+  border: 2px solid #22c55e;
+  bottom: 8px;
+  top: auto;
+  transform: none;
+  box-shadow: 0 4px 16px rgba(34,197,94,0.28), 0 2px 8px rgba(0,0,0,0.12);
+  z-index: 10;
+  position: absolute;
+  transition: box-shadow 0.2s, background 0.2s;
+}
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  box-shadow: 0 8px 32px rgba(34,197,94,0.38), 0 4px 16px rgba(0,0,0,0.16);
+}
+.swiper-button-next {
+  left: 50%;
+  margin-left: 18px;
+}
+.swiper-button-prev {
+  left: 50%;
+  margin-left: -46px;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 16px;
+}
+.swiper {
+  padding-bottom: 40px;
+}
+.swiper-slide {
+  padding: 0 8px;
+}
+.swiper-button-disabled {
+  opacity: 0;
+  pointer-events: none;
+}

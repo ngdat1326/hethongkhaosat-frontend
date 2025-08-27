@@ -1,0 +1,90 @@
+﻿/* Logo Configuration - Dễ dàng điều chỉnh kích thước logo */
+
+/* Kích thước logo cho các trang khác nhau */
+:root {
+    /* Landing Page */
+    --logo-header-size: 4rem; /* Increased from 3.5rem */
+    --logo-footer-size: 4rem; /* Increased from 2.5rem */
+        /* Admin Dashboard */
+    --logo-sidebar-size: 3rem; /* 48px - w-12 h-12 */
+    /* Patient Survey */
+    --logo-survey-size: 3.5rem; /* 56px - w-14 h-14 */
+    /* Login Page */
+    --logo-login-size: 5rem; /* 80px - w-20 h-20 */
+}
+
+/* Classes để dễ dàng thay đổi kích thước */
+.logo-header {
+    width: var(--logo-header-size);
+    height: var(--logo-header-size);
+}
+
+.logo-footer {
+    width: var(--logo-footer-size);
+    height: var(--logo-footer-size);
+}
+
+.logo-sidebar {
+    width: var(--logo-sidebar-size);
+    height: var(--logo-sidebar-size);
+}
+
+.logo-survey {
+    width: var(--logo-survey-size);
+    height: var(--logo-survey-size);
+}
+
+.logo-login {
+    width: var(--logo-login-size);
+    height: var(--logo-login-size);
+}
+
+/* Responsive logo sizes */
+@media (max-width: 768px) {
+    :root {
+        --logo-header-size: 3rem; /* Nhỏ hơn trên mobile */
+        --logo-footer-size: 2rem;
+        --logo-sidebar-size: 2.5rem;
+        --logo-survey-size: 3rem;
+        --logo-login-size: 4rem;
+    }
+}
+
+/* Logo container base styles */
+.logo-container {
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+    .logo-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Hover effects cho logo */
+    .logo-container:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.05);
+        transition: all 0.3s ease;
+    }
+
+/* Animation cho logo */
+@keyframes logoGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    }
+}
+
+.logo-container.animate-glow {
+    animation: logoGlow 2s ease-in-out infinite;
+}

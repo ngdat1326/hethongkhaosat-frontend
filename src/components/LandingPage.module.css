@@ -1,0 +1,129 @@
+/* LandingPage.module.css */
+.header-logos {
+  max-width: 2000px;
+  min-height: 140px;
+}
+.logo108 {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  margin-right: 40px;
+}
+.logoRight {
+  width: 650px;
+  height: 140px;
+  object-fit: contain;
+  margin-left: 24px;
+}
+.logo-mobile {
+  width: 170px;
+  height: 170px;
+  object-fit: contain;
+  display: none;
+}
+.login-link {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  z-index: 10;
+  color: #19793a;
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: none;
+  background: rgba(255,255,255,0.85);
+  padding: 2px 10px;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.login-link:hover {
+  text-decoration: underline;
+  color: #15803d;
+}
+.login-hamburger {
+  position: absolute;
+  top: 10px;
+  right: 18px;
+  z-index: 11;
+  width: 36px;
+  height: 36px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.95);
+  border-radius: 0 !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  border: none;
+  cursor: pointer;
+}
+.hamburger-icon {
+  display: block;
+  width: 22px;
+}
+.hamburger-bar {
+  display: block;
+  height: 4px;
+  background: #19793a;
+  margin: 3px 0;
+  border-radius: 2px;
+}
+.mobile-login-menu {
+  position: absolute;
+  top: 52px;
+  right: 12px;
+  z-index: 20;
+  background: #fff;
+  border-radius: 0 !important;
+  padding: 8px 0;
+  min-width: 160px;
+  text-align: right;
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15) !important;
+}
+.mobile-login-menu button {
+  background: none;
+  border: none;
+  color: #19793a;
+  font-weight: 600;
+  font-size: 16px;
+  width: 100%;
+  padding: 10px 20px;
+  text-align: right;
+  cursor: pointer;
+}
+.green-bar {
+  width: 100%;
+  background: #319243;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+.marquee {
+  white-space: nowrap;
+  display: inline-block;
+  animation: marquee-rtl 18s linear infinite;
+  font-weight: 600;
+  font-size: 18px;
+  color: #fff;
+}
+.marquee-label {
+  margin: 0 12px;
+  color: #fff;
+  font-weight: 600;
+}
+.marquee-highlight {
+  color: #ffe066;
+  font-weight: 700;
+}
+@keyframes marquee-rtl {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+@media (max-width: 640px) {
+  .header-logos { justify-content: center; }
+  .logo108, .logoRight { display: none !important; }
+  .logo-mobile { display: block !important; margin: 0 auto; }
+  .login-link { display: none !important; }
+  .login-hamburger { display: flex !important; }
+}
