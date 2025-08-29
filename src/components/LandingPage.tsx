@@ -7,13 +7,14 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import { API_BASE_URL } from '../config';
 
 function slugify(text: string) {
   return text
     .toLowerCase()
     .normalize('NFD').replace(/\p{Diacritic}/gu, '')
     .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+    .replace(/^-+|-+$/g, '');   
 }
 
 function encodeId(id: string | number) {
@@ -25,7 +26,7 @@ const LandingPage: React.FC = () => {
     const [showMobileLogin, setShowMobileLogin] = React.useState(false);
     const navigate = useNavigate();
     React.useEffect(() => {
-        fetch('/api/PublicSurvey/active')
+        fetch(`${API_BASE_URL}/api/PublicSurvey/active`)
             .then(res => res.json())
             .then(data => setActiveSurveys(Array.isArray(data) ? data : []))
             .catch(() => setActiveSurveys([]));

@@ -15,6 +15,7 @@ import {
     RefreshCcw
 } from 'lucide-react';
 import { useAuth } from '../../contexts/useAuth';
+import { API_BASE_URL } from '../../config';
 
 // Map backend UserDto to frontend User
 interface User {
@@ -35,7 +36,7 @@ interface Department {
     name: string;
 }
 
-const API_BASE = 'https://localhost:7226/api/ManageUser';
+const API_BASE = `${API_BASE_URL}/api/ManageUser`;
 
 const UserManager: React.FC = () => {
     const [users, setUsers] = useState<User[]>([]);
@@ -82,7 +83,7 @@ const UserManager: React.FC = () => {
             try {
                 const token = localStorage.getItem('token');
                 // Fix endpoint to match your backend: /api/ManageDepartment
-                const res = await fetch('https://localhost:7226/api/ManageDepartment', {
+                const res = await fetch(`${API_BASE_URL}/api/ManageDepartment`, {
                     headers: token ? { 'Authorization': `Bearer ${token}` } : {}
                 });
                 if (!res.ok) throw new Error('Lỗi khi tải danh sách khoa');

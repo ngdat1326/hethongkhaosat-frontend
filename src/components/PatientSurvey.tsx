@@ -23,6 +23,7 @@ import {
 import type { SurveyTreeNode } from '../utils/surveyFlow';
 import { SurveyStatus } from '../types/survey';
 import type { Branch } from '../types/survey';
+import { API_BASE_URL } from '../config';
 
 function normalizeQuestionType(code: string): QuestionType {
   switch (code) {
@@ -119,7 +120,7 @@ const PatientSurvey: React.FC = () => {
   useEffect(() => {
     if (surveyId) {
       setLoading(true);
-      fetch(`/api/PublicSurvey/detail/${surveyId}`)
+      fetch(`${API_BASE_URL}/api/PublicSurvey/detail/${surveyId}`)
         .then(async res => {
           if (!res.ok) throw new Error('Không tìm thấy khảo sát');
           const text = await res.text();
@@ -300,7 +301,7 @@ const PatientSurvey: React.FC = () => {
       return;
     }
     try {
-      const response = await fetch('/api/PublicSurvey/submit', {
+      const response = await fetch(`${API_BASE_URL}/api/PublicSurvey/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

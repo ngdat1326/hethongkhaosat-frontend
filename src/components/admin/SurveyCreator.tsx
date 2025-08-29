@@ -8,6 +8,7 @@ import {
   FileText,
   AlertCircle
 } from 'lucide-react';
+import { API_BASE_URL } from '../../config';
 
 interface Department {
   id: number;
@@ -32,7 +33,7 @@ const SurveyCreator: React.FC = () => {
     const fetchDepartments = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('https://localhost:7226/api/ManageDepartment', {
+        const res = await fetch(`${API_BASE_URL}/api/ManageDepartment`, {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (!res.ok) throw new Error('Lỗi khi tải danh sách khoa');

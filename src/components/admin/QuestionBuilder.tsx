@@ -5,7 +5,7 @@ import type { Question, Survey } from '../../types/survey';
 import {
   Plus,
   ArrowLeft,
-  Save,
+
   Trash2,
   Edit,
   GripVertical,
@@ -16,22 +16,22 @@ import {
   AlertCircle,
   CheckCircle,
   GitBranch,
-  ArrowRight,
   Link,
   ArrowUp,
   ArrowDown,
   List
 } from 'lucide-react';
 import QuestionModal from './QuestionModal';
+import { API_BASE_URL } from '../../config';
 
 // Sửa lại URL API đúng với backend (chữ hoa):
-const API_DETAIL = 'https://localhost:7226/api/ManageSurvey/detail';
+const API_DETAIL = `${API_BASE_URL}/api/ManageSurvey/detail`;
 
 // API endpoints
-const API_QUESTION = 'https://localhost:7226/api/ManageQuestion';
-const API_OPTION = 'https://localhost:7226/api/ManageOption';
-const API_BRANCH = 'https://localhost:7226/api/ManageQuestionBranch';
-const API_UPDATE_ORDER = 'https://localhost:7226/api/ManageQuestion/update-order';
+const API_QUESTION = `${API_BASE_URL}/api/ManageQuestion`;
+//const API_OPTION = `${API_BASE_URL}/api/ManageOption`;
+//const API_BRANCH = `${API_BASE_URL}/api/ManageQuestionBranch`;
+const API_UPDATE_ORDER = `${API_BASE_URL}/api/ManageQuestion/update-order`;
 
 const QuestionBuilder: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -42,7 +42,7 @@ const QuestionBuilder: React.FC = () => {
   const [editingQuestion, setEditingQuestion] = useState<Question | null>(null);
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [branchParentId, setBranchParentId] = useState<string | null>(null);
-  const [questionTypes, setQuestionTypes] = useState<{ id: number; code: string; name: string }[]>([]);
+  const [, setQuestionTypes] = useState<{ id: number; code: string; name: string }[]>([]);
 
   useEffect(() => {
     if (!id) return;
@@ -102,7 +102,7 @@ const QuestionBuilder: React.FC = () => {
   // Lấy danh sách loại câu hỏi từ backend
   useEffect(() => {
     const token = localStorage.getItem('token');
-    fetch('https://localhost:7226/api/ManageQuestionType', {
+    fetch(`${API_BASE_URL}/api/ManageQuestionType`, {
       headers: {
         'Authorization': token ? `Bearer ${token}` : '',
         'Content-Type': 'application/json'
@@ -154,7 +154,7 @@ const QuestionBuilder: React.FC = () => {
   ];
 
   // Đệ quy render các câu hỏi phân nhánh nhiều cấp, truyền thêm level
-  const renderBranchQuestion = (questionId: string, parentQuestion?: Question, parentOptionContent?: string, parentBranchConditionText?: string, level: number = 0) => {
+  const renderBranchQuestion = (questionId: string, _parentQuestion?: Question, _parentOptionContent?: string, _parentBranchConditionText?: string, level: number = 0) => {
     const question = questions.find(q => q.id === questionId);
     if (!question) return null;
     // Tìm các option có nextQuestionId
@@ -278,108 +278,6 @@ const QuestionBuilder: React.FC = () => {
       </div>
     );
   };
-
-  // Hàm lưu câu hỏi, option, branch
-  //const handleSaveQuestions = async () => {
-  //  if (!survey) return;
-  //  const token = localStorage.getItem('token');
-  //  try {
-  //    for (const q of questions) {
-  //      // Tìm đúng id loại câu hỏi từ backend
-  //      const typeObj = questionTypes.find(t =>
-  //        (q.type === QuestionType.SINGLE_CHOICE && t.code === 'SingleChoice') ||
-  //        (q.type === QuestionType.MULTIPLE_CHOICE && t.code === 'MultiChoice') ||
-  //        (q.type === QuestionType.TEXT && t.code === 'Text') ||
-  //        (q.type === QuestionType.RATING && t.code === 'Scale')
-  //      );
-  //      const questionPayload = {
-  //        surveyId: survey.id,
-  //        content: q.text,
-  //        questionTypeId: typeObj?.id,
-  //        order: q.order,
-  //        isRequired: q.required
-  //      };
-  //      let questionRes;
-  //      if (!q.id || q.id.startsWith('new')) {
-  //        // Tạo mới
-  //        questionRes = await fetch(API_QUESTION, {
-  //          method: 'POST',
-  //          headers:
-  //          {
-  //            'Authorization': token ? `Bearer ${token}` : '',
-  //            'Content-Type': 'application/json'
-  //          },
-  //          body: JSON.stringify(questionPayload)
-  //        }).then(res => res.json());
-  //        q.id = questionRes.id.toString();
-  //      } else {
-  //        // Cập nhật
-  //        await fetch(`${API_QUESTION}/${q.id}`, {
-  //          method: 'PUT',
-  //          headers:
-  //          {
-  //            'Authorization': token ? `Bearer ${token}` : '',
-  //            'Content-Type': 'application/json'
-  //          },
-  //          body: JSON.stringify(questionPayload)
-  //        });
-  //      }
-  //      // Lưu option cho câu hỏi (nếu có)
-  //      if (q.options && (q.type === QuestionType.SINGLE_CHOICE || q.type === QuestionType.MULTIPLE_CHOICE)) {
-  //        for (const opt of q.options) {
-  //          const optionPayload = {
-  //            questionId: q.id,
-  //            content: opt.content,
-  //            value: opt.value || null
-  //          };
-  //          let optionRes;
-  //          if (!opt.id || opt.id.startsWith('new')) {
-  //            // Tạo mới
-  //            optionRes = await fetch(API_OPTION, {
-  //              method: 'POST',
-  //              headers: {
-  //                'Authorization': token ? `Bearer ${token}` : '',
-  //                'Content-Type': 'application/json'
-  //              },
-  //              body: JSON.stringify(optionPayload)
-  //            }).then(res => res.json());
-  //            opt.id = optionRes.id.toString();
-  //          } else {
-  //            // Cập nhật
-  //            await fetch(`${API_OPTION}/${opt.id}`, {
-  //              method: 'PUT',
-  //              headers: {
-  //                'Authorization': token ? `Bearer ${token}` : '',
-  //                'Content-Type': 'application/json'
-  //              },
-  //              body: JSON.stringify(optionPayload)
-  //            });
-  //          }
-  //          // Lưu branch nếu có nextQuestionId
-  //          if (opt.nextQuestionId) {
-  //            const branchPayload = {
-  //              currentQuestionId: q.id,
-  //              optionId: opt.id,
-  //              nextQuestionId: opt.nextQuestionId
-  //            };
-  //            await fetch(API_BRANCH, {
-  //              method: 'POST',
-  //              headers: {
-  //                'Authorization': token ? `Bearer ${token}` : '',
-  //                'Content-Type': 'application/json'
-  //              },
-  //              body: JSON.stringify(branchPayload)
-  //            });
-  //          }
-  //        }
-  //      }
-  //    }
-  //    alert('Lưu câu hỏi thành công!');
-  //  } catch (err) {
-  //    alert('Lỗi khi lưu câu hỏi!');
-  //    console.error(err);
-  //  }
-  //};
 
   // Hàm xóa câu hỏi
   const handleDeleteQuestion = async (id: string) => {
@@ -787,13 +685,11 @@ interface QuestionCardProps {
 
 const QuestionCard: React.FC<QuestionCardProps> = ({ 
   question, 
-  index, 
   onEdit, 
   onDelete, 
   isParent,
   isChild,
   isBranch,
-  allQuestions,
   onAddBranch
 }) => {
   return (

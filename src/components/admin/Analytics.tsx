@@ -13,7 +13,8 @@ import {
   CartesianGrid,
   LabelList
 } from 'recharts';
-import { MessageSquare, Copy } from 'lucide-react';
+import { MessageSquare} from 'lucide-react';
+import { API_BASE_URL } from '../../config';
 
 const COLORS = ['#3366cc', '#ff9900', '#dc3912', '#109618', '#990099', '#0099c6', '#dd4477', '#66aa00'];
 
@@ -48,7 +49,7 @@ const Analytics: React.FC = () => {
     setLoading(true);
     setError('');
     const token = localStorage.getItem('token');
-    fetch(`/api/SurveyAnalytics/${selectedSurvey}`, {
+    fetch(`${API_BASE_URL}/api/SurveyAnalytics/${selectedSurvey}`, {
       headers: { Authorization: token ? `Bearer ${token}` : '' }
     })
       .then(async res => {
@@ -59,10 +60,6 @@ const Analytics: React.FC = () => {
       .catch((err: Error) => setError(err.message || 'Lỗi không xác định'))
       .finally(() => setLoading(false));
   }, [selectedSurvey]);
-
-  const handleCopyChart = () => {
-    alert('Chức năng sao chép biểu đồ sẽ được cập nhật sau!');
-  };
 
   // Render stars for rating scale, chia kỹ mức 0.25/0.5/0.75
   const renderStars = (max: number, avg: number) => (

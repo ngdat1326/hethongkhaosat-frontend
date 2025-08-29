@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { Survey, SurveyResponse, Question } from '../types/survey';
 import { useAuth } from './useAuth';
+import { API_BASE_URL } from '../config';
 
 export interface SurveyContextType {
   surveys: Survey[];
@@ -31,8 +32,8 @@ export const useSurvey = () => {
   return context;
 };
 
-const API_BASE = 'https://localhost:7226/api/ManageSurvey';
-const QUESTION_API_BASE = 'https://localhost:7226/api/ManageQuestion';
+const API_BASE = `${API_BASE_URL}/api/ManageSurvey`;
+const QUESTION_API_BASE = `${API_BASE_URL}/api/ManageQuestion`;
 
 export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [surveys, setSurveys] = useState<Survey[]>([]);

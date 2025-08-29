@@ -2,11 +2,12 @@
 import { QuestionType } from '../../types/survey';
 import type { Question } from '../../types/survey';
 import { X, Circle, CheckSquare, Type, Star, GitBranch, Plus, Trash2 } from 'lucide-react';
+import { API_BASE_URL } from '../../config';
 
 // Thêm các endpoint API
-const API_QUESTION = 'https://localhost:7226/api/ManageQuestion';
-const API_OPTION = 'https://localhost:7226/api/ManageOption';
-const API_BRANCH = 'https://localhost:7226/api/ManageQuestionBranch';
+const API_QUESTION = `${API_BASE_URL}/api/ManageQuestion`;
+const API_OPTION = `${API_BASE_URL}/api/ManageOption`;
+const API_BRANCH = `${API_BASE_URL}/api/ManageQuestionBranch`;
 
 interface QuestionModalProps {
     question?: Question | null;
@@ -42,7 +43,7 @@ const QuestionModal: React.FC<QuestionModalProps> = ({ question, questions, surv
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        fetch('https://localhost:7226/api/ManageQuestionType', {
+        fetch(`${API_BASE_URL}/api/ManageQuestionType`, {
             headers: {
                 'Authorization': token ? `Bearer ${token}` : '',
                 'Content-Type': 'application/json'
@@ -100,7 +101,7 @@ const QuestionModal: React.FC<QuestionModalProps> = ({ question, questions, surv
                     return;
                 }
             } catch (err) {
-                alert('Lỗi khi xóa lựa chọn!');
+                console.error(err);
                 return;
             }
         }
@@ -215,7 +216,7 @@ const QuestionModal: React.FC<QuestionModalProps> = ({ question, questions, surv
                     }
                     optionRes = await optionResponse.json();
                     opt.id = optionRes.id;
-                    optionIds.push(opt.id);
+                    if (opt.id) optionIds.push(opt.id);
                 }
             }
             // Nếu là câu hỏi thang điểm, tạo options từ minRating-maxRating

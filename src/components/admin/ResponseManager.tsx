@@ -5,6 +5,7 @@ import {
   FileSpreadsheet
 } from 'lucide-react';
 import { FixedSizeList as List } from 'react-window';
+import { API_BASE_URL } from '../../config';
 
 interface Survey {
   id: string | number;
@@ -52,7 +53,7 @@ const ResponseManager: React.FC = () => {
     async function fetchSurveys() {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('/api/ManageSurvey', {
+        const res = await fetch(`${API_BASE_URL}/api/ManageSurvey`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (!res.ok) throw new Error('Không thể lấy danh sách khảo sát');
@@ -62,7 +63,7 @@ const ResponseManager: React.FC = () => {
           (Array.isArray(data) ? data : []).map(async (s) => {
             let questions = [];
             try {
-              const detailRes = await fetch(`/api/ManageSurvey/detail/${s.id ?? s.surveyId}`,
+              const detailRes = await fetch(`${API_BASE_URL}/api/ManageSurvey/detail/${s.id ?? s.surveyId}`,
                 { headers: { Authorization: `Bearer ${token}` } });
               if (detailRes.ok) {
                 const detailData = await detailRes.json();
@@ -92,7 +93,7 @@ const ResponseManager: React.FC = () => {
       }
       try {
         const token = localStorage.getItem('token');
-        const url = `/api/PublicSurvey/responses/${selectedSurveyId}`;
+        const url = `${API_BASE_URL}/api/PublicSurvey/responses/${selectedSurveyId}`;
         const res = await fetch(url, {
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -202,7 +203,7 @@ const ResponseManager: React.FC = () => {
       query = `?fromDate=${encodeURIComponent(fromDate)}&toDate=${encodeURIComponent(toDate)}`;
     }
     const token = localStorage.getItem('token');
-    const res = await fetch(`/api/Report/export-excel/${selectedSurveyId}${query}`, {
+    const res = await fetch(`${API_BASE_URL}/api/Report/export-excel/${selectedSurveyId}${query}`, {
       method: 'GET',
       headers: {
         'Authorization': token ? `Bearer ${token}` : ''
@@ -254,7 +255,7 @@ const ResponseManager: React.FC = () => {
     toDate.setHours(23, 59, 59, 999);
     const query = `?fromDate=${encodeURIComponent(fromDate.toISOString())}&toDate=${encodeURIComponent(toDate.toISOString())}`;
     const token = localStorage.getItem('token');
-    const res = await fetch(`/api/Report/export-excel/${selectedSurveyId}${query}`, {
+    const res = await fetch(`${API_BASE_URL}/api/Report/export-excel/${selectedSurveyId}${query}`, {
       method: 'GET',
       headers: {
         'Authorization': token ? `Bearer ${token}` : ''
@@ -471,7 +472,7 @@ const ResponseManager: React.FC = () => {
                   let answerDisplay = ans.answerContent || '';
                   // Nếu là câu hỏi rating (Scale), hiển thị nhãn thay vì số
                   if (ans.questionTypeCode === 'Scale' && ans.answerContent) {
-                    answerDisplay = getRatingLabel(ans.answerContent);
+                      answerDisplay = getRatingLabel(ans.answerContent != null ? String(ans.answerContent) : '') as string;
                   }
                   return (
                     <tr key={ans.questionId}>

@@ -7,11 +7,7 @@ import {
   Plus, 
   Edit, 
   Trash2, 
-  Pause, 
-  Copy, 
   Calendar,
-  Users,
-  CheckCircle,
   MoreHorizontal,
   X,
   FileText
@@ -19,6 +15,7 @@ import {
 import { SurveyStatus } from '../../types/survey';
 import type { Survey } from '../../types/survey';
 import { QRCodeCanvas } from 'qrcode.react';
+import { API_BASE_URL } from '../../config';
 
 interface Department { id: number; name: string; }
 interface User { id: string; fullName: string; username: string; }
@@ -163,7 +160,7 @@ const SurveyList: React.FC = () => {
     const fetchDepartments = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('https://localhost:7226/api/ManageDepartment', {
+        const res = await fetch(`${API_BASE_URL}/api/ManageDepartment`, {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (!res.ok) throw new Error('Lỗi khi tải danh sách khoa');
@@ -177,7 +174,7 @@ const SurveyList: React.FC = () => {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('https://localhost:7226/api/ManageUser/list-user?page=1&pageSize=1000', {
+        const res = await fetch(`${API_BASE_URL}/api/ManageUser/list-user?page=1&pageSize=1000`, {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (!res.ok) throw new Error('Lỗi khi tải danh sách người dùng');

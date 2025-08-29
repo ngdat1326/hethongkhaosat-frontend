@@ -1,5 +1,6 @@
 ﻿import { createContext, useState, useEffect, useCallback, type ReactNode } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import { API_BASE_URL } from '../config';
 
 export interface User {
     id: string;
@@ -70,7 +71,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             // Try to refresh if access token is missing/expired
             (async () => {
                 console.log('[AuthProvider] Token expired or missing, trying to refresh...');
-                const response = await fetch('https://localhost:7226/api/Auth/refresh-token', {
+                const response = await fetch(`${API_BASE_URL}/api/Auth/refresh-token`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ refreshToken: refreshTokenValue })
@@ -108,7 +109,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // Login: store both tokens
     const login = async (username: string, password: string): Promise<boolean | string | { requireOtp: boolean; message: string }> => {
         try {
-            const response = await fetch('https://localhost:7226/api/Auth/login', {
+            const response = await fetch(`${API_BASE_URL}/api/Auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -154,7 +155,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const refreshToken = localStorage.getItem('refreshToken');
         if (!refreshToken) return false;
         try {
-            const response = await fetch('https://localhost:7226/api/Auth/refresh-token', {
+            const response = await fetch(`${API_BASE_URL}/api/Auth/refresh-token`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ refreshToken })

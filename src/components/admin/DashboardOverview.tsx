@@ -9,8 +9,9 @@ import {
 } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
+import { API_BASE_URL } from '../../config';
+//import 'swiper/css';
+//import 'swiper/css/navigation';
 
 // Định nghĩa kiểu dữ liệu cho survey trong dashboardSummary
 interface DashboardSurvey {
@@ -44,7 +45,7 @@ const DashboardOverview: React.FC = () => {
     async function fetchSummary() {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('/api/Dashboard/summary', {
+        const res = await fetch(`${API_BASE_URL}/api/Dashboard/summary`, {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (!res.ok) throw new Error('Không thể lấy dữ liệu tổng hợp dashboard');

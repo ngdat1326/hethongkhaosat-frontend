@@ -3,6 +3,7 @@ import { useAuth } from '../contexts/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Shield, ArrowRight } from 'lucide-react';
 import Logo from './common/Logo';
+import { API_BASE_URL } from '../config';
 
 const LoginPage: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -66,7 +67,7 @@ const LoginPage: React.FC = () => {
         setOtpError('');
         setOtpLoading(true);
         try {
-            const response = await fetch('/api/Auth/verify-otp', {
+            const response = await fetch(`${API_BASE_URL}/api/Auth/verify-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, otpCode })
@@ -96,7 +97,7 @@ const LoginPage: React.FC = () => {
         setResendMessage('');
         setOtpError('');
         try {
-            const response = await fetch('/api/Auth/resend-otp', {
+            const response = await fetch(`${API_BASE_URL}/api/Auth/resend-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username })
